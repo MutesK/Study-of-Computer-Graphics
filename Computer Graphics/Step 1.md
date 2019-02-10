@@ -18,5 +18,5 @@
 
 ## Windows Message Queue
 
-![](C:\Users\MutesK\Desktop\프로그래밍 공부\WinApi\GDI\Step 1\Pic1.PNG)
+![](.\Pic1.PNG)
 

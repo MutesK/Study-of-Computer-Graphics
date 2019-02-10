@@ -38,5 +38,6 @@
 *.log
 *.res
 *.tlog
+*.opendb
 
 
