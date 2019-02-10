@@ -20,11 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{E65640E0-32B5-48C3-9B5C-628EA410DD36}</ProjectGuid>
+    <ProjectGuid>{834D777E-1A84-4FCF-ABE5-46CC44360D42}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Step2Vector</RootNamespace>
+    <RootNamespace>Step3</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-    <ProjectName>Step 2</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -148,30 +147,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Basis2D.h" />
     <ClInclude Include="MathUtil.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ScreenCoordinate.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Step 2 Vector.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Basis2D.cpp" />
     <ClCompile Include="MathUtil.cpp" />
+    <ClCompile Include="ScreenCoordinate.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Step 2 Vector.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Vector.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Step 2 Vector.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico" />
     <Image Include="Step 2 Vector.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Step 2 Vector.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
