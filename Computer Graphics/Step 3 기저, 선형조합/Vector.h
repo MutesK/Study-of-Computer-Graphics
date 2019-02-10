@@ -19,6 +19,8 @@ namespace MathUtil
 
 		friend Vector2D operator*(const Vector2D& hs, float scalar);
 		friend Vector2D operator*(const Vector2D& rhs, const Vector2D& lhs);
+		friend Vector2D operator+(const Vector2D& rhs, const Vector2D& lhs);
+		friend Vector2D operator-(const Vector2D& rhs, const Vector2D& lhs);
 	private:
 		float _x;
 		float _y;

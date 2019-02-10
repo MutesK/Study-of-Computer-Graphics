@@ -41,3 +41,6 @@
 *.opendb
 
 
+*.db-shm
+*.db-wal
+*.ilk

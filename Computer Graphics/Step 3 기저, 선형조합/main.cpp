@@ -114,7 +114,6 @@ void OnPaint(HDC& hdc)
 	using namespace MathUtil;
 
 	RECT rect;
-	// Draw Rect
 	GetClientRect(g_Hwnd, &rect);
 
 	Vector2D origin; // 원점 좌표

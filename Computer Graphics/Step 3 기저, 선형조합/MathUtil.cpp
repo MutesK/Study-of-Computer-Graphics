@@ -13,7 +13,7 @@ namespace MathUtil
 
 	void SetBasis2(const Basis2D& basis2)
 	{
-		g_basis2 = g_basis2;
+		g_basis2 = basis2;
 	}
 
 	void DrawLine(HDC hdc, const Vector2D& rVec, const Vector2D& lVec, int linewidth,
@@ -30,8 +30,8 @@ namespace MathUtil
 		HGDIOBJ original = SelectObject(hdc, hpen); // Ææ ±³Ã¼
 
 		{
-			MoveToEx(hdc, (int)rVec.get_x(), (int)rVec.get_y(), nullptr);
-			LineTo(hdc, (int)lVec.get_x(), (int)lVec.get_y());
+			MoveToEx(hdc, (int)v0.get_x(), (int)v0.get_y(), nullptr);
+			LineTo(hdc, (int)v1.get_x(), (int)v1.get_y());
 		}
 
 		SelectObject(hdc, original);
