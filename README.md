@@ -9,10 +9,10 @@
 - [x] Vector
 - [ ] 삼각함수
 - [x] 기저
-- [ ] Back-Buffering
-- [ ] 2차원 행렬
-- [ ] 선형변환
-- [ ] 2차원 행렬 곱셈
+- [x] Back-Buffering
+- [x] 2차원 행렬
+- [x] 선형변환
+- [x] 2차원 행렬 곱셈
 - [ ] 아핀 변환 & Homogeneous Coordinates
 
 ## Etc
