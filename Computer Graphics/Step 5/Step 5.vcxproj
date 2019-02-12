@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="Basis2D.cpp" />
     <ClCompile Include="MathUtil.cpp" />
+    <ClCompile Include="Matrix2D.cpp" />
     <ClCompile Include="ScreenCoordinate.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

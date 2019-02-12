@@ -15,6 +15,9 @@
     <ClCompile Include="ScreenCoordinate.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="Matrix2D.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />

@@ -384,12 +384,13 @@ void OnIdle(float fElapsedTime)
 		Matrix2D matRot;
 		Matrix2D matShear;
 
-		matShear.SetShear(0, 1.0f);
 		matRot.SetRotation(M_PI / 2.0f);
+		matShear.SetShear(0, 1.0f);
+
 		transform = matShear * matRot;
 
 		DrawGrid(g_hdc, 10, 10);
-		if (iAnimState == AnimationMode::eNot_AnimMode)
+		//if (iAnimState == AnimationMode::eNot_AnimMode)
 			DrawAxis(g_hdc, 10, 10, RGB(255, 0, 0), RGB(255, 0, 0));
 
 		DrawLine(g_hdc, transform * Vector2D(0, 0), transform * Vector2D(2, 3), 2,

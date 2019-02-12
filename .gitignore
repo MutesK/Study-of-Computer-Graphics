@@ -44,3 +44,4 @@
 *.db-shm
 *.db-wal
 *.ilk
+*.enc

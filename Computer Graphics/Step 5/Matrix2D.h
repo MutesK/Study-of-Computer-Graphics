@@ -35,7 +35,7 @@ namespace MathUtil
 		void SetRotation(float theta)
 		{
 			_e11 = cosf(theta), _e12 = -sinf(theta);
-			_e12 = sinf(theta), _e22 = cosf(theta);
+			_e21 = sinf(theta), _e22 = cosf(theta);
 		}
 
 		// 쉐어 변환행렬화
@@ -72,6 +72,8 @@ namespace MathUtil
 		GET_CONST_ATTRIBUTE(float, e12);
 		GET_CONST_ATTRIBUTE(float, e21);
 		GET_CONST_ATTRIBUTE(float, e22);
+
+		friend Matrix2D operator*(const Matrix2D& a, const Matrix2D& b);
 
 	private:
 		float _e11, _e12;
