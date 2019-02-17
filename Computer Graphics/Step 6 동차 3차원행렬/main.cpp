@@ -8,7 +8,7 @@
 #include <objidl.h>
 #include <gdiplus.h>
 #include <cmath>
-
+#include "Matrix3D.h"
 using namespace Gdiplus;
 
 #pragma comment(lib, "winmm.lib")
@@ -302,105 +302,90 @@ void OnIdle(float fElapsedTime)
 	HGDIOBJ oldBrush = SelectObject(g_hdc, brush);
 	Rectangle(g_hdc, 0, 0, iWidth, iHeight);
 
-	static AnimationMode iAnimState = AnimationMode::eRotate_AnimMode;
+	static int iAnimState = 0;
 
-	if (iAnimState == AnimationMode::eRotate_AnimMode)
+	Vector2D v0 = Vector2D(0, 0);
+	Vector2D v1 = Vector2D(2, 3);
+	Vector2D v2 = Vector2D(0, 0);
+	Vector2D v3 = Vector2D(2, 3);
+	Matrix3D matRotResult;
+	matRotResult.SetRotation(M_PI / 2.0f);
+	Matrix3D matTransResult;
+	matTransResult.SetTranslation(2.0f, 1.0f);
+
+	if (iAnimState == 0)
 	{
-		Matrix2D matRot;
-		matRot.SetRotation(M_PI / 2.0f);
-
 		const float animSpeed = 0.5f;
 		static float lerpTime = 0.0f;
-
 		lerpTime += fElapsedTime * animSpeed;
-		Basis2D basis2;
-		Vector2D axis0Begin = Vector2D(1, 0);
-		Vector2D axis0End;
-		Vector2D axis1Begin = Vector2D(0, 1);
-		Vector2D axis1End;
 
-		// 회전행렬의 0, 1번째의 기저를 가져온다. - 열백터
-		matRot.GetBasis(axis0End, 0);
-		matRot.GetBasis(axis1End, 1);
+		Matrix3D matRot;
+		float rotDelta;
+		rotDelta = Lerp(0, M_PI / 2.0f, lerpTime);
+		matRot.SetRotation(rotDelta);
 
-		Vector2D axis0 = Vector2D::LinearInterpolate(axis0Begin, axis0End, lerpTime);
-		Vector2D axis1 = Vector2D::LinearInterpolate(axis1Begin, axis1End, lerpTime);
-		
-		// 정규화
-		axis0.Normalize();
-		axis1.Normalize();
+		v0 = matRot * v0;
+		v1 = matRot * v1;
 
-		// 기저 적용한다. - 좌표계와 벡터그리기에 적용됨.
-		basis2.SetInfo(axis0, axis1);
-		SetBasis2(basis2);
+		Vector2D transBegin = Vector2D(0, 0);
+		Vector2D transEnd = Vector2D(2.0f, 1.0f);
+		Vector2D transDelta = Vector2D::LinearInterpolate(transBegin, transEnd, lerpTime);
+		Matrix3D matTrans;
+		matTrans.SetTranslation(transDelta.get_x(), transDelta.get_y());
+
+		v2 = matTrans * v2;
+		v3 = matTrans * v3;
 
 		DrawGrid(g_hdc, 10, 10);
 		DrawAxis(g_hdc, 10, 10, RGB(0, 0, 255), RGB(0, 0, 255));
-		DrawLine(g_hdc, Vector2D(0, 0), Vector2D(2, 3), 2, PS_SOLID);
+		DrawLine(g_hdc, v0, v1, 1, PS_SOLID);
+		DrawLine(g_hdc, v2, v3, 1, PS_DASH);
 
-		if (lerpTime > 1.0f)
-			iAnimState = AnimationMode::eShear_AnimMode;
+		if (lerpTime >= 1.0f)
+			iAnimState += 1;
 	}
-	else if (iAnimState >= AnimationMode::eShear_AnimMode) // 찌그러트리기 효과
+	else if (iAnimState >= 1)
 	{
-		Matrix2D matShear;
-		matShear.SetShear(0, 1.0f);
-
 		const float animSpeed = 0.5f;
 		static float lerpTime = 0.0f;
-
 		lerpTime += fElapsedTime * animSpeed;
-		Basis2D basis2;
-		Vector2D axis0Begin = Vector2D(1, 0);
-		Vector2D axis0End;
-		Vector2D axis1Begin = Vector2D(0, 1);
-		Vector2D axis1End;
 
-		matShear.GetBasis(axis0End, 0);
-		matShear.GetBasis(axis1End, 1);
+		Matrix3D matRot;
+		float rotDelta;
+		rotDelta = Lerp(0, M_PI / 2.0f, lerpTime);
+		matRot.SetRotation(rotDelta);
 
-		Vector2D axis0 = Vector2D::LinearInterpolate(axis0Begin, axis0End, lerpTime);
-		Vector2D axis1 = Vector2D::LinearInterpolate(axis1Begin, axis1End, lerpTime);
+		Vector2D transBegin = Vector2D(0, 0);
+		Vector2D transEnd = Vector2D(2.0f, 1.0f);
+		Vector2D transDelta = Vector2D::LinearInterpolate(transBegin, transEnd, lerpTime);
+		Matrix3D matTrans;
+		matTrans.SetTranslation(transDelta.get_x(), transDelta.get_y());
 
-		basis2.SetInfo(axis0, axis1);
-		SetBasis2(basis2);
+		v0 = matTrans * matRotResult * v0;
+		v1 = matTrans * matRotResult * v1;
 
-		DrawGrid(g_hdc, 10, 10);
-		DrawAxis(g_hdc, 10, 10, RGB(0, 255, 0), RGB(0, 255, 0));
-		DrawLine(g_hdc, Vector2D(0, 0), Vector2D(-3, 2), 2, PS_SOLID);
+		v2 = matRot * matTransResult * v2;
+		v3 = matRot * matTransResult * v3;
 
-		if (lerpTime >= 1.0f && iAnimState == AnimationMode::eShear_AnimMode)
-			iAnimState = AnimationMode::eNot_AnimMode;
+		DrawLine(g_hdc, v0, v1, 1, PS_SOLID);
+		DrawLine(g_hdc, v2, v3, 1, PS_DASH);
+
+		if (lerpTime >= 1.0f && iAnimState == 1)
+			iAnimState += 1;
 	}
 
-	// Result
-	// 쉐어 변환 + 회전
 	{
-		Basis2D basis2;
-		basis2.SetInfo(Vector2D(0, 0), Vector2D(0, 1));
+		Basis2D     basis2;
+		basis2.SetInfo(Vector2D(1, 0), Vector2D(0, 1));
 		SetBasis2(basis2);
 
-		Matrix2D transform;
-		Matrix2D matRot;
-		Matrix2D matShear;
-
-		matRot.SetRotation(M_PI / 2.0f);
-		matShear.SetShear(0, 1.0f);
-
-		transform = matShear * matRot;
-
 		DrawGrid(g_hdc, 10, 10);
-		//if (iAnimState == AnimationMode::eNot_AnimMode)
-			DrawAxis(g_hdc, 10, 10, RGB(255, 0, 0), RGB(255, 0, 0));
-
-		DrawLine(g_hdc, transform * Vector2D(0, 0), transform * Vector2D(2, 3), 2,
-			PS_DASH);
-		
+		DrawAxis(g_hdc, 10, 10, RGB(255, 0, 0), RGB(255, 0, 0));
 	}
 
 	BitBlt(hdc, 0, 0, iWidth, iHeight, g_hdc, 0, 0, SRCCOPY);
 	SelectObject(g_hdc, oldBrush);
 	DeleteObject(brush);
 
-	ReleaseDC(g_Hwnd, hdc);
+	::ReleaseDC(g_Hwnd, hdc);
 }
