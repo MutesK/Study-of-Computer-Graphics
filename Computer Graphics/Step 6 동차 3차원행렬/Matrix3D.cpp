@@ -73,7 +73,7 @@ namespace MathUtil
 		_e21 = shearXParalleToY; _e22 = 1.0f;
 	}
 
-	void Matrix3D::SetScale(float uniScale)
+	void Matrix3D::SetScale(float uniScale)  // Affine Transform ¾ÆÇÉº¯È¯
 	{
 		SetIdentity();
 
