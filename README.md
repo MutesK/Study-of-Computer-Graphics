@@ -13,7 +13,11 @@
 - [x] 2차원 행렬
 - [x] 선형변환
 - [x] 2차원 행렬 곱셈
-- [ ] 아핀 변환 & Homogeneous Coordinates
+- [x] 아핀 변환 & Homogeneous Divide
+- [x] 3차원 행렬
+- [ ] Primitive and Polygon
+- [ ] Isometric 투상
+- [ ] Perspective 투상
 
 ## Etc
 
